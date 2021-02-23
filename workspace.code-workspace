@@ -1,0 +1,23 @@
+{
+	"folders": [
+		{
+			"path": "frontend"
+		},
+		{
+			"path": "backend"
+		}
+	],
+	"settings": {},
+	"launch": {
+		"version": "0.2.0",
+		"compounds": [
+			{
+				"name": "Run both",
+				"configurations": [
+					"Attach to backend",
+					"Attach to frontend"
+				]
+			}
+		]
+	}
+}

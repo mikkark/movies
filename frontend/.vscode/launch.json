@@ -1,0 +1,25 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        // {
+        //     "name": "Attach to frontend2",
+        //     "request": "launch",
+        //     "runtimeArgs": [
+        //         "run start"
+        //     ],
+        //     "runtimeExecutable": "npm",
+        //     "skipFiles": [
+        //         "<node_internals>/**"
+        //     ],
+        //     "type": "pwa-node"
+        // },
+
+        {
+            "command": "npm run start",
+            "name": "Attach to frontend",
+            "request": "launch",
+            "type": "node-terminal"
+        }
+    ],
+    "compounds": []
+}
