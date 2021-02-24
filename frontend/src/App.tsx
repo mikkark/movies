@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import logo from './logo.svg';
-import CenteredGrid from './CenteredGrid';
 import styled from 'styled-components';
 import { IMovie } from './Types';
 import { Card, CardContent, Typography } from '@material-ui/core';
@@ -44,6 +42,8 @@ const MainGridContainer = styled.div`
     grid-template-areas:
       "header-main              header-main              header-main    header-main"
       "categories               movies-list               movies-list           movies-list"      
+      "categories               movies-list               movies-list           movies-list"      
+      "categories               movies-list               movies-list           movies-list"      
       "footer          footer          footer           footer"      
     ;
   //}  
@@ -64,6 +64,7 @@ const MoviesList = styled.div`
 
 const FooterDiv = styled.div`
   grid-area: footer;
+  text-align: center;
 `;
 
 const MovieCard = styled(Card)`
