@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { IMovie } from './Types';
-import { Card, CardContent, Typography } from '@material-ui/core';
+import { Card } from '@material-ui/core';
+import MoviesList from './MoviesList';
+import CategoriesList from './CategoriesList';
 
 const AppDiv = styled.div`
   max-width: 80%;
   margin-left: 10%;
   padding-top: 2em;
-  background-color: #cad2eb;
 `;
 
 const MainGridContainer = styled.div`
@@ -54,11 +55,11 @@ const TopHeader = styled.div`
   text-align: center;
 `;
 
-const CategoriesList = styled.div`
+const CategoriesListContainer = styled.div`
   grid-area: categories;  
 `;
 
-const MoviesList = styled.div`
+const MoviesListContainer = styled.div`
   grid-area: movies-list;
 `;
 
@@ -71,12 +72,33 @@ const MovieCard = styled(Card)`
   margin: 1em;
 `;
 
+interface ICategory {
+  id: string,
+  friendlyName: string
+}
+
+export interface IMoviesContext {
+  movies: IMovie[],
+  categories: ICategory[],
+  selectedCategoryId: string,
+  onSelectCategory: (id: string) => void
+};
+
+const categories = [
+  { id: "drama", friendlyName: "Drama" },
+  { id: "comedy", friendlyName: "Comedy" },
+  { id: "scifi", friendlyName: "Scifi" }
+];
+
+export const MoviesContext = createContext({} as IMoviesContext);
+
 function App() {
   const [movies, setMovies] = useState([] as IMovie[]);
+  const [selectedCategoryId, setSelectedCategoryId] = useState<null | string>(null);
 
   useEffect(() => {
     const realCall = async () => {
-      const res = await fetch("http://localhost:7071/api/GetAllMovies");
+      const res = await fetch(`${process.env["REACT_APP_API_URL"]}/api/GetAllMovies`);
 
       setMovies(await res.json());
     };
@@ -84,27 +106,23 @@ function App() {
     realCall();
   }, [])
 
+  const handleCategorySelected = (id: string) => {
+    setSelectedCategoryId(id);
+  }
+
   return (
     <AppDiv>
       <MainGridContainer>
-        <TopHeader>Haloota</TopHeader>
-        <CategoriesList>
-          {[1, 2, 3, 4, 5].map(i => {
-            return <div>{i}</div>
-          })}
-        </CategoriesList>
-        <MoviesList>
-          {movies.map(movie => {
-            return <MovieCard>
-              <CardContent>
-                <Typography color="textSecondary">
-                  {movie.title}
-                </Typography>
-              </CardContent>
-            </MovieCard>
-          })}
-        </MoviesList>
-        <FooterDiv>Copyright Mikko 2021</FooterDiv>
+        <MoviesContext.Provider value={{ movies, categories, selectedCategoryId: selectedCategoryId ?? "", onSelectCategory: handleCategorySelected }}>
+          <TopHeader>Haloota</TopHeader>
+          <CategoriesListContainer>
+            <CategoriesList></CategoriesList>
+          </CategoriesListContainer>
+          <MoviesListContainer>
+            <MoviesList></MoviesList>
+          </MoviesListContainer>
+          <FooterDiv>Copyright Mikko 2021</FooterDiv>
+        </MoviesContext.Provider>
       </MainGridContainer>
     </AppDiv>
   );
