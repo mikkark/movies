@@ -7,7 +7,7 @@ import { IMovie } from './Types';
 export default function MoviesList(): ReactElement {
     const moviesContext = useContext(MoviesContext);
     const [orderBy, setOrderBy] = useState<keyof IMovie>("id");
-    const [orderDirection, setOrderDirection] = useState<SortDirection>(false);
+    const [orderDirection, setOrderDirection] = useState<SortDirection>("asc");
 
     const filterFn = (movie: IMovie) => {
         if (moviesContext.selectedCategoryId === "") {
