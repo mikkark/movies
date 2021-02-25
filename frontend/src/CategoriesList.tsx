@@ -1,5 +1,5 @@
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@material-ui/core'
-import React, { ReactElement, useContext, useEffect } from 'react'
+import { Paper, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from '@material-ui/core'
+import React, { ReactElement, useContext } from 'react'
 import { MoviesContext } from './App'
 
 export default function CategoriesList(): ReactElement {
