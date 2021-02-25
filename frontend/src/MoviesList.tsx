@@ -1,10 +1,13 @@
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@material-ui/core'
-import React, { ReactElement, useContext } from 'react'
+import { Paper, Table, TableBody, TableCell, TableContainer, TableRow, Typography, SortDirection } from '@material-ui/core'
+import React, { ReactElement, useContext, useState } from 'react'
 import { MoviesContext } from './App'
+import MoviesTableHeadWithSorting from './MoviesTableHeadWithSorting';
 import { IMovie } from './Types';
 
 export default function MoviesList(): ReactElement {
     const moviesContext = useContext(MoviesContext);
+    const [orderBy, setOrderBy] = useState<keyof IMovie>("id");
+    const [orderDirection, setOrderDirection] = useState<SortDirection>(false);
 
     const filterFn = (movie: IMovie) => {
         if (moviesContext.selectedCategoryId === "") {
@@ -18,20 +21,39 @@ export default function MoviesList(): ReactElement {
         return false;
     };
 
+    /* start copy-paste from MaterialUI demos */
+    function descendingComparator(a: IMovie, b: IMovie, orderBy: keyof IMovie) {
+        if (b[orderBy] < a[orderBy]) {
+            return -1;
+        }
+        if (b[orderBy] > a[orderBy]) {
+            return 1;
+        }
+        return 0;
+    }
+
+    function getComparator(orderDirection: SortDirection, orderBy: keyof IMovie) {
+        return orderDirection === 'desc'
+            ? (a: IMovie, b: IMovie) => descendingComparator(a, b, orderBy)
+            : (a: IMovie, b: IMovie) => -descendingComparator(a, b, orderBy);
+    }
+    
+    const handleSortRequested = (property: keyof IMovie) => {
+        const isAsc = orderBy === property && orderDirection === 'asc';
+        setOrderDirection(isAsc ? 'desc' : 'asc');
+        setOrderBy(property);
+    };
+
+    /* end copy-paste from MaterialUI demos */
+    
     return (
         <>
             <Typography>Movies!</Typography>
             <TableContainer component={Paper}>
                 <Table aria-label="simple table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Id</TableCell>
-                            <TableCell>Title</TableCell>
-                            <TableCell>Category</TableCell>
-                        </TableRow>
-                    </TableHead>
+                    <MoviesTableHeadWithSorting orderBy={orderBy} order={orderDirection} onRequestSort={handleSortRequested} />
                     <TableBody>
-                        {moviesContext.movies.filter(filterFn).map((movie) => (
+                        {moviesContext.movies.filter(filterFn).sort(getComparator(orderDirection, orderBy)).map((movie) => (
                             <TableRow key={movie.id} hover={true}>
                                 <TableCell component="th" scope="row">
                                     {movie.id}
