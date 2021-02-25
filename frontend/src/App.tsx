@@ -81,7 +81,7 @@ function App() {
 
   useEffect(() => {
     const realCall = async () => {
-      const res = await fetch(`${process.env["REACT_APP_API_URL"]}/api/GetAllMovies`);
+      const res = await fetch(`${process.env["REACT_APP_API_URL"]}/GetAllMovies`);
 
       setMovies(await res.json());
     };
