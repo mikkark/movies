@@ -4,6 +4,26 @@ Read me first - running instructions
 
 - Azure Functions tools (crossplat)
 - Node and NPM
+- The following settings files:
+
+  Frontend: 
+    File: .env.local
+    Contents: REACT_APP_API_URL=http://localhost:7071/api
+
+  Backend:
+    File: local.settings.json
+    Contents:
+
+    {
+      "IsEncrypted": false,
+      "Host": {
+	"CORS": "*"
+       },
+       "Values": {
+         "FUNCTIONS_WORKER_RUNTIME": "node",
+         "AzureWebJobsStorage": ""
+       }
+    }
 
 1) With VS Code
 
