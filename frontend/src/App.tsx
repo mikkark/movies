@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { IMovie } from './Types';
+import { IMovie, IMoviesContext } from './Types';
 import MoviesList from './MoviesList';
 import CategoriesList from './CategoriesList';
 
@@ -66,18 +66,6 @@ const FooterDiv = styled.div`
   grid-area: footer;
   text-align: center;
 `;
-
-interface ICategory {
-  id: string,
-  friendlyName: string
-}
-
-export interface IMoviesContext {
-  movies: IMovie[],
-  categories: ICategory[],
-  selectedCategoryId: string,
-  onSelectCategory: (id: string) => void
-};
 
 const categories = [
   { id: "drama", friendlyName: "Drama" },
