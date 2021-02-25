@@ -3,7 +3,7 @@ import { Movies } from "../Movie";
 
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
     context.log('HTTP trigger function processed a request.');
-    const id: string = req.query.id;
+    const id: string = req.params.id;
 
     if (id === undefined) {
         context.res = {
@@ -29,7 +29,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
 
     context.res = {
         // status: 200, /* Defaults to 200 */
-        body: movieById
+        body: movieById[0]
     };
 
 };

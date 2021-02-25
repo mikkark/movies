@@ -1,4 +1,4 @@
-import { Paper, Table, TableBody, TableCell, TableContainer, TableRow, Typography, SortDirection } from '@material-ui/core'
+import { Paper, Table, TableBody, TableCell, TableContainer, TableRow, Typography, SortDirection, Card, Popover } from '@material-ui/core'
 import React, { ReactElement, useContext, useState } from 'react'
 import { MoviesContext } from './App'
 import MoviesTableHeadWithSorting from './MoviesTableHeadWithSorting';
@@ -8,6 +8,7 @@ export default function MoviesList(): ReactElement {
     const moviesContext = useContext(MoviesContext);
     const [orderBy, setOrderBy] = useState<keyof IMovie>("id");
     const [orderDirection, setOrderDirection] = useState<SortDirection>("asc");
+    const [currentMovie, setCurrentMovie] = useState<IMovie | null>(null);
 
     const filterFn = (movie: IMovie) => {
         if (moviesContext.selectedCategoryId === "") {
@@ -37,15 +38,38 @@ export default function MoviesList(): ReactElement {
             ? (a: IMovie, b: IMovie) => descendingComparator(a, b, orderBy)
             : (a: IMovie, b: IMovie) => -descendingComparator(a, b, orderBy);
     }
-    
+
     const handleSortRequested = (property: keyof IMovie) => {
         const isAsc = orderBy === property && orderDirection === 'asc';
         setOrderDirection(isAsc ? 'desc' : 'asc');
         setOrderBy(property);
     };
 
+    const [anchorEl, setAnchorEl] = React.useState(null);
+
+    const handleClick = (id: string) => (event: any) => {
+        const realCall = async (event: any, id: string) => {
+            const res = await fetch(`${process.env["REACT_APP_API_URL"]}/movie/${id}`);
+
+            const movie = await res.json();
+                        
+            setCurrentMovie(movie);
+        }
+
+        setAnchorEl(anchorEl ? null : event.currentTarget);
+
+        realCall(event, id);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const open = Boolean(anchorEl);
+    const id = open ? 'transitions-popper' : undefined;
+
     /* end copy-paste from MaterialUI demos */
-    
+
     return (
         <>
             <Typography>Movies!</Typography>
@@ -54,7 +78,7 @@ export default function MoviesList(): ReactElement {
                     <MoviesTableHeadWithSorting orderBy={orderBy} order={orderDirection} onRequestSort={handleSortRequested} />
                     <TableBody>
                         {moviesContext.movies.filter(filterFn).sort(getComparator(orderDirection, orderBy)).map((movie) => (
-                            <TableRow key={movie.id} hover={true}>
+                            <TableRow key={movie.id} hover={true} onClick={handleClick(movie.id)}>
                                 <TableCell component="th" scope="row">
                                     {movie.id}
                                 </TableCell>
@@ -67,6 +91,28 @@ export default function MoviesList(): ReactElement {
                     </TableBody>
                 </Table>
             </TableContainer>
+
+            { currentMovie &&
+                <Popover
+                    id={id}
+                    open={open}
+                    anchorEl={anchorEl}
+                    onClose={handleClose}
+                    anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'center',
+                    }}
+                    transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'center',
+                    }}
+                >
+                    <Card>
+                        <Typography variant="h3">{currentMovie.title}</Typography>
+                        <Typography>{currentMovie.category}</Typography>
+                    </Card>
+                </Popover>
+            }
         </>
     )
 }

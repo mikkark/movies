@@ -3,6 +3,7 @@
     {
       "authLevel": "function",
       "type": "httpTrigger",
+      "route": "category/{id}/movies",
       "direction": "in",
       "name": "req",
       "methods": [

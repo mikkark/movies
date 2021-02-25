@@ -3,6 +3,7 @@
     {
       "authLevel": "function",
       "type": "httpTrigger",
+      "route": "movie",
       "direction": "in",
       "name": "req",
       "methods": [

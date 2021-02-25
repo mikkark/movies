@@ -4,6 +4,7 @@
       "authLevel": "function",
       "type": "httpTrigger",
       "direction": "in",
+      "route": "movie/{id}",
       "name": "req",
       "methods": [
         "get",
