@@ -1,7 +1,6 @@
 import React, { createContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { IMovie } from './Types';
-import { Card } from '@material-ui/core';
 import MoviesList from './MoviesList';
 import CategoriesList from './CategoriesList';
 
@@ -66,10 +65,6 @@ const MoviesListContainer = styled.div`
 const FooterDiv = styled.div`
   grid-area: footer;
   text-align: center;
-`;
-
-const MovieCard = styled(Card)`
-  margin: 1em;
 `;
 
 interface ICategory {
