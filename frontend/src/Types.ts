@@ -1,7 +1,10 @@
 export interface IMovie {
 	id: string,
 	title: string,
-	category: string
+	category: string,
+	genres: string[],
+	actors: string[],
+	posterurl: string
 }
 
 export interface ICategory {

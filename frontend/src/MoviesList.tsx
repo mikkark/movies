@@ -107,9 +107,17 @@ export default function MoviesList(): ReactElement {
                         horizontal: 'center',
                     }}
                 >
-                    <Card>
+                    <Card style={{"width": "30em"}}>
                         <Typography variant="h3">{currentMovie.title}</Typography>
-                        <Typography>{currentMovie.category}</Typography>
+                        <Typography variant="h5">Categories:</Typography>
+                        <Typography>{currentMovie.genres.reduce((prev, curr) => (prev === "" ? prev: prev + ", ") + curr, "")}</Typography>
+                        <Typography variant="h5">Actors:</Typography>
+                        {
+                            currentMovie.actors.map(actor => {
+                                return <Typography>{actor}</Typography>
+                            })
+                        }
+                        <img src={currentMovie.posterurl}></img>
                     </Card>
                 </Popover>
             }

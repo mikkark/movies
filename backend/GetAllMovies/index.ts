@@ -8,7 +8,8 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
 
     const moviesWithCategory = (moviesJson as any[]).map(movie => {
         return {
-            ...movie,
+            id: movie.id,
+            title: movie.title,
             category: movie.genres[0].toLowerCase()
         };
     });
