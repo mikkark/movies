@@ -46,7 +46,10 @@ const categories = [
   { id: "adventure", friendlyName: "Adventure" },
   { id: "crime", friendlyName: "Crime" },
   { id: "animation", friendlyName: "Animation" },
-  { id: "romance", friendlyName: "Romance" }
+  { id: "romance", friendlyName: "Romance" },
+  { id: "mystery", friendlyName: "Mystery" },
+  { id: "western", friendlyName: "Western" },
+  { id: "horror", friendlyName: "Horror" }
 ];
 
 export const MoviesContext = createContext({} as IMoviesContext);
