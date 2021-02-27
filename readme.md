@@ -5,6 +5,7 @@ Read me first - running instructions
 
 * Azure Functions tools (crossplat)
 * Node and NPM
+* Difficult one: you should have the provided top-rated-movies-01.json file in Azure Blob Storage OR in Azure Storage Emulator (Azurite for crossplat).
 * The following settings files:
 
   * Frontend: 
@@ -21,9 +22,10 @@ Read me first - running instructions
 	>	},
 	>	"Values": {
 	>		"FUNCTIONS_WORKER_RUNTIME": "node",
-	>		"AzureWebJobsStorage": ""
+	>		"AzureWebJobsStorage": "UseDevelopmentStorage=true"
 	>	}
 	> }
+     * NOTE: UseDevelopmentStorage=true requires Azure Storage Emulator. Alternatively, place the required JSON file in actual Azure Storage Account and put the conn string here.
 
 2 With VS Code
 ---------------
