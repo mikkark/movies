@@ -15,7 +15,7 @@
       "name": "moviesBlob",
       "type": "blob",
       "path": "data/top-rated-movies-01.json",
-      "connection": "AzureWebJobsStorage",
+      "connection": "BlobStorage",
       "direction": "in"
     },
     {
