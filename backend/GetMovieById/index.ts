@@ -3,6 +3,9 @@ import { Movies } from "../Movie";
 
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
     context.log('HTTP trigger function processed a request.');
+
+    const moviesJson = context.bindings.moviesBlob
+
     const id: string = req.params.id;
 
     if (id === undefined) {
@@ -14,7 +17,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
         return;
     }
 
-    const movies = Movies;
+    const movies = moviesJson ?? Movies;
 
     const movieById = movies.filter(m => m.id === id);
 
