@@ -1,6 +1,7 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableRow, Typography, SortDirection, Card, Popover } from '@material-ui/core'
 import React, { ReactElement, useContext, useState } from 'react'
 import { MoviesContext } from './App'
+import { getComparator } from './ComparisonFunctions';
 import MoviesTableHeadWithSorting from './MoviesTableHeadWithSorting';
 import { IMovie } from './Types';
 
@@ -21,23 +22,6 @@ export default function MoviesList(): ReactElement {
 
         return false;
     };
-
-    /* start copy-paste from MaterialUI demos */
-    function descendingComparator(a: IMovie, b: IMovie, orderBy: keyof IMovie) {
-        if (b[orderBy] < a[orderBy]) {
-            return -1;
-        }
-        if (b[orderBy] > a[orderBy]) {
-            return 1;
-        }
-        return 0;
-    }
-
-    function getComparator(orderDirection: SortDirection, orderBy: keyof IMovie) {
-        return orderDirection === 'desc'
-            ? (a: IMovie, b: IMovie) => descendingComparator(a, b, orderBy)
-            : (a: IMovie, b: IMovie) => -descendingComparator(a, b, orderBy);
-    }
 
     const handleSortRequested = (property: keyof IMovie) => {
         const isAsc = orderBy === property && orderDirection === 'asc';
@@ -63,12 +47,11 @@ export default function MoviesList(): ReactElement {
 
     const handleClose = () => {
         setAnchorEl(null);
+        setCurrentMovie(null);
     };
 
     const open = Boolean(anchorEl);
     const id = open ? 'transitions-popper' : undefined;
-
-    /* end copy-paste from MaterialUI demos */
 
     return (
         <>
