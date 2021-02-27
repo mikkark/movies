@@ -100,7 +100,7 @@ export default function MoviesList(): ReactElement {
                                 return <Typography>{actor}</Typography>
                             })
                         }
-                        <img src={currentMovie.posterurl}></img>
+                        <img src={currentMovie.posterurl} alt="Movie poster"></img>
                     </Card>
                 </Popover>
             }
